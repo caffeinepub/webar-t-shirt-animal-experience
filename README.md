@@ -1,2 +1,3 @@
-# webar-t-shirt-animal-experience
-Exported from Caffeine project: WebAR T-Shirt Animal Experience
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

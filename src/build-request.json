@@ -1,0 +1,91 @@
+{
+  "kind": "build_request",
+  "title": "Fix MindAR library CDN loading failure with local bundling",
+  "projectName": "AR Shirt Experience",
+  "priority": "high",
+  "requirements": [
+    {
+      "id": "REQ-23",
+      "text": "Download the MindAR library and bundle it locally in the frontend application instead of relying on CDN loading, placing the library files in frontend/public/lib/mindar/ and updating frontend/index.html to load from the local path instead of CDN URLs",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "AR Library Error",
+          "MindAR library failed to load from CDN"
+        ]
+      },
+      "acceptanceCriteria": [
+        "MindAR library files are downloaded and placed in frontend/public/lib/mindar/ directory",
+        "frontend/index.html script tag loads MindAR from local path instead of CDN",
+        "The fallback CDN loading mechanism is removed since local bundling is now the primary method",
+        "window.MINDAR is successfully defined after local script loads",
+        "AR experience initializes without CDN-related errors"
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "text": "Update the TypeScript type declarations in frontend/src/types/mindar.d.ts to remove CDN-specific loading flags (window.mindARCDNLoaded, window.mindARCDNFailed) since the library will now be bundled locally",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ]
+      },
+      "acceptanceCriteria": [
+        "CDN loading flags are removed from type declarations",
+        "Type declarations accurately reflect local bundling approach",
+        "No TypeScript errors occur after removing CDN-specific types"
+      ]
+    },
+    {
+      "id": "REQ-25",
+      "text": "Remove the network connectivity check from App.tsx since CDN loading is no longer used, and update the error handling to remove 'network' and 'cdn' error types, keeping only 'permission', 'camera', and 'initialization' error types",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Network connectivity check (fetch to google.com/favicon.ico) is removed from App.tsx",
+        "ErrorType no longer includes 'network' and 'cdn' types",
+        "Error handling UI no longer displays network or CDN error messages",
+        "Error messages focus on camera permission and AR initialization issues"
+      ]
+    },
+    {
+      "id": "REQ-26",
+      "text": "Update the error detection logic in App.tsx to remove the window.MINDAR undefined check since the library will always be available from local bundling, simplifying the initialization flow",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ]
+      },
+      "acceptanceCriteria": [
+        "window.MINDAR undefined check is removed from initialization logic",
+        "AR initialization proceeds directly to arController.initialize() after component mount",
+        "No CDN validation checks remain in the codebase"
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not change the backend (backend/main.mo) - it remains an empty placeholder",
+    "Do not modify immutable frontend paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui",
+    "Maintain the existing AR controller architecture (arController.ts, modelLoader.ts, animationController.ts, captureController.ts)",
+    "Preserve the Three.js and MindAR integration patterns already established in the codebase"
+  ],
+  "nonGoals": [
+    "Adding new 3D models or changing model configuration",
+    "Modifying AR tracking or animation behavior",
+    "Changing UI components beyond error message updates",
+    "Adding new features beyond fixing the CDN loading issue"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

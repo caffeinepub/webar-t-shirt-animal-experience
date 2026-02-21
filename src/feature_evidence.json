@@ -1,0 +1,82 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-download-the-mindar-library-and-bundle-it-locally-in-the-frontend-application-instead-of-relying-on-cdn-loading-placing-the-library-files-in-frontend-public-lib-mindar-and-updating-frontend-index-html-to-load-from-the-local-path-instead-of-cdn-urls",
+      "featureTitle": "Download the MindAR library and bundle it locally in the frontend application instead of relying on CDN loading, placing the library files in frontend/public/lib/mindar/ and updating frontend/index.html to load from the local path instead of CDN URLs",
+      "files": [
+        "frontend/index.html",
+        "frontend/public/lib/mindar/mindar-image-three.prod.js"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-23"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-typescript-type-declarations-in-frontend-src-types-mindar-d-ts-to-remove-cdn-specific-loading-flags-window-mindarcdnloaded-window-mindarcdnfailed-since-the-library-will-now-be-bundled-locally",
+      "featureTitle": "Update the TypeScript type declarations in frontend/src/types/mindar.d.ts to remove CDN-specific loading flags (window.mindARCDNLoaded, window.mindARCDNFailed) since the library will now be bundled locally",
+      "files": [
+        "frontend/src/types/mindar.d.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-24"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-remove-the-network-connectivity-check-from-app-tsx-since-cdn-loading-is-no-longer-used-and-update-the-error-handling-to-remove-network-and-cdn-error-types-keeping-only-permission-camera-and-initialization-error-types",
+      "featureTitle": "Remove the network connectivity check from App.tsx since CDN loading is no longer used, and update the error handling to remove 'network' and 'cdn' error types, keeping only 'permission', 'camera', and 'initialization' error types",
+      "files": [
+        "frontend/src/App.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-25"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-error-detection-logic-in-app-tsx-to-remove-the-window-mindar-undefined-check-since-the-library-will-always-be-available-from-local-bundling-simplifying-the-initialization-flow",
+      "featureTitle": "Update the error detection logic in App.tsx to remove the window.MINDAR undefined check since the library will always be available from local bundling, simplifying the initialization flow",
+      "files": [
+        "frontend/src/App.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-26"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

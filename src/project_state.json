@@ -1,0 +1,307 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 11,
+  "summary": "WebAR T-shirt experience: 5 animal 3D models emerge from kids T-shirt using MindAR image tracking, Three.js rendering, realistic animations, model selection UI, and photo/video capture",
+  "architectural_notes": [
+    "Modular architecture: arController.js (tracking), modelLoader.js (3D assets), animationController.js (emergence effect), uiController.js (interface)",
+    "MindAR image tracking for T-shirt print detection with anchor-based model attachment",
+    "Three.js rendering pipeline with physically-based materials and sRGB color space",
+    "DRACO compression for 3D model optimization",
+    "Preloading strategy for smooth model switching without frame drops"
+  ],
+  "known_issues": [
+    "Only bear model loads; other 4 models ignored due to missing loader logic",
+    "Model anchoring fails - attached to camera instead of image target",
+    "Flat appearance from missing realistic lighting and shadow system",
+    "UI layout breaks after deployment - responsive design issues",
+    "Slow 3D model loading without compression or progress feedback",
+    "Missing model selection system - no UI to switch between animals",
+    "No 'emerging' animation - models appear instantly without depth effect",
+    "Photo/video capture includes UI overlay elements",
+    "Model doesn't track T-shirt movement - poor anchor stability",
+    "Camera permission request not functioning properly"
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-implement-dynamic-3d-model-loading-system-that-loads-all-5-animal-models-bear-lion-elephant-giraffe-monkey-with-proper-gltfloader-integration-draco-compression-support-and-background-preloading-for-smooth-model-switching",
+      "title": "Implement dynamic 3D model loading system that loads all 5 animal models (bear, lion, elephant, giraffe, monkey) with proper GLTFLoader integration, DRACO compression support, and background preloading for smooth model switching",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-model-selection-ui-with-buttons-or-carousel-that-allows-users-to-switch-between-the-5-animal-models-properly-unloading-the-previous-model-and-loading-the-new-one-with-visual-feedback",
+      "title": "Create model selection UI with buttons or carousel that allows users to switch between the 5 animal models, properly unloading the previous model and loading the new one with visual feedback",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-robust-mindar-image-target-tracking-system-that-firmly-anchors-3d-models-to-the-t-shirt-print-attaching-models-to-the-image-target-anchor-instead-of-camera-with-correct-position-rotation-scale-and-pivot-alignment-so-the-base-of-each-animal-aligns-with-the-shirt-print",
+      "title": "Implement robust MindAR image target tracking system that firmly anchors 3D models to the T-shirt print, attaching models to the image target anchor instead of camera, with correct position, rotation, scale, and pivot alignment so the base of each animal aligns with the shirt print",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-realistic-coming-out-of-shirt-emergence-animation-with-initial-small-scale-slightly-inside-shirt-animating-upward-with-scale-up-using-easing-functions-adding-subtle-bounce-or-idle-animation-loop-and-including-z-offset-so-animals-appear-to-emerge-outward-from-the-fabric",
+      "title": "Create realistic 'coming out of shirt' emergence animation with initial small scale slightly inside shirt, animating upward with scale-up using easing functions, adding subtle bounce or idle animation loop, and including Z-offset so animals appear to emerge outward from the fabric",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-physically-correct-lighting-system-with-realistic-shading-srgb-encoding-soft-shadow-plane-under-each-model-ambient-and-directional-lights-calibrated-for-mobile-ar-and-proper-material-properties-for-depth-perception",
+      "title": "Implement physically correct lighting system with realistic shading, sRGB encoding, soft shadow plane under each model, ambient and directional lights calibrated for mobile AR, and proper material properties for depth perception",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-optimize-performance-for-smooth-60fps-on-mobile-devices-by-implementing-draco-compression-loading-progress-indicators-optimized-render-loop-without-unnecessary-re-renders-efficient-geometry-and-texture-management-and-frame-rate-monitoring",
+      "title": "Optimize performance for smooth 60fps on mobile devices by implementing DRACO compression, loading progress indicators, optimized render loop without unnecessary re-renders, efficient geometry and texture management, and frame rate monitoring",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-fully-responsive-mobile-first-ui-layout-that-does-not-break-after-deployment-with-clean-design-clear-scan-instructions-overlay-and-proper-css-that-works-in-production-environment",
+      "title": "Create fully responsive mobile-first UI layout that does not break after deployment, with clean design, clear scan instructions overlay, and proper CSS that works in production environment",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-photo-and-video-capture-system-that-excludes-ui-overlay-elements-captures-high-resolution-output-provides-smooth-video-recording-and-exports-media-with-proper-naming-and-download-functionality",
+      "title": "Implement photo and video capture system that excludes UI overlay elements, captures high-resolution output, provides smooth video recording, and exports media with proper naming and download functionality",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-organize-codebase-into-modular-architecture-with-separate-files-arcontroller-js-for-mindar-tracking-initialization-and-management-modelloader-js-for-gltf-loading-and-model-management-animationcontroller-js-for-emergence-and-idle-animations-and-uicontroller-js-for-interface-interactions-and-capture-functionality",
+      "title": "Organize codebase into modular architecture with separate files: arController.js for MindAR tracking initialization and management, modelLoader.js for GLTF loading and model management, animationController.js for emergence and idle animations, and uiController.js for interface interactions and capture functionality",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-existing-5-animal-3d-models-bear-lion-elephant-giraffe-monkey-with-3-new-3d-models-provided-by-the-user-updating-the-model-loader-configuration-in-frontend-src-lib-modelloader-ts-to-load-only-these-3-models-with-their-correct-file-paths-and-names",
+      "title": "Replace the existing 5 animal 3D models (bear, lion, elephant, giraffe, monkey) with 3 new 3D models provided by the user, updating the model loader configuration in frontend/src/lib/modelLoader.ts to load only these 3 models with their correct file paths and names",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-modelselector-component-in-frontend-src-components-modelselector-tsx-to-display-exactly-3-selection-buttons-corresponding-to-the-new-3d-models-removing-the-previous-5-button-layout-and-updating-button-labels-icons-appropriately",
+      "title": "Update the ModelSelector component in frontend/src/components/ModelSelector.tsx to display exactly 3 selection buttons corresponding to the new 3D models, removing the previous 5-button layout and updating button labels/icons appropriately",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-preloadmodels-function-in-app-tsx-to-preload-only-the-3-new-models-ensuring-the-loading-progress-indicator-correctly-reflects-the-reduced-model-count",
+      "title": "Update the preloadModels function in App.tsx to preload only the 3 new models, ensuring the loading progress indicator correctly reflects the reduced model count",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-diagnose-and-fix-the-camera-permission-request-issue-by-ensuring-the-webrtc-getusermedia-api-is-properly-called-with-video-constraints-before-mindar-initialization-adding-proper-error-handling-for-permission-denied-scenarios-and-displaying-clear-error-messages-to-the-user-when-camera-access-is-blocked",
+      "title": "Diagnose and fix the camera permission request issue by ensuring the WebRTC getUserMedia API is properly called with video constraints before MindAR initialization, adding proper error handling for permission denied scenarios, and displaying clear error messages to the user when camera access is blocked",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-permission-state-checking-in-the-scaninstructions-component-to-detect-if-camera-permission-was-previously-denied-and-display-instructions-on-how-to-enable-it-in-browser-settings-preventing-silent-failures",
+      "title": "Add permission state checking in the ScanInstructions component to detect if camera permission was previously denied and display instructions on how to enable it in browser settings, preventing silent failures",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-comprehensive-error-logging-to-arcontroller-ts-initialize-function-to-capture-and-log-the-specific-error-details-when-ar-initialization-fails-including-mindar-initialization-errors-camera-stream-errors-scene-setup-errors-and-model-loading-errors",
+      "title": "Add comprehensive error logging to arController.ts initialize function to capture and log the specific error details when AR initialization fails, including MindAR initialization errors, camera stream errors, scene setup errors, and model loading errors",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-error-recovery-and-retry-mechanism-in-app-tsx-that-catches-ar-initialization-failures-displays-a-user-friendly-error-message-with-the-specific-failure-reason-and-provides-a-try-again-button-to-reinitialize-the-ar-experience",
+      "title": "Add error recovery and retry mechanism in App.tsx that catches AR initialization failures, displays a user-friendly error message with the specific failure reason, and provides a 'Try Again' button to reinitialize the AR experience",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-validation-checks-in-arcontroller-ts-before-ar-initialization-to-verify-that-all-required-assets-exist-shirt-target-mind-file-all-3-model-glb-files-at-correct-paths-and-throw-descriptive-errors-if-any-assets-are-missing",
+      "title": "Add validation checks in arController.ts before AR initialization to verify that all required assets exist (shirt-target.mind file, all 3 model GLB files at correct paths), and throw descriptive errors if any assets are missing",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-mindar-initialization-error-handling-in-arcontroller-ts-by-wrapping-the-mindar-controller-creation-and-start-calls-in-try-catch-blocks-checking-for-common-mindar-failure-modes-invalid-target-file-webgl-context-loss-incompatible-browser-and-providing-specific-error-messages-for-each-failure-scenario",
+      "title": "Improve MindAR initialization error handling in arController.ts by wrapping the MindAR controller creation and start calls in try-catch blocks, checking for common MindAR failure modes (invalid target file, WebGL context loss, incompatible browser), and providing specific error messages for each failure scenario",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-detection-for-mindar-library-cdn-loading-failure-in-app-tsx-by-checking-if-window-mindar-is-undefined-after-the-script-load-attempt-and-display-a-specific-error-message-mindar-library-failed-to-load-from-cdn-with-instructions-to-check-internet-connection",
+      "title": "Add detection for MindAR library CDN loading failure in App.tsx by checking if window.MINDAR is undefined after the script load attempt, and display a specific error message 'MindAR library failed to load from CDN' with instructions to check internet connection",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-fallback-cdn-loading-mechanism-in-frontend-index-html-by-adding-multiple-cdn-sources-for-mindar-library-unpkg-com-jsdelivr-net-cdnjs-with-automatic-fallback-logic-that-tries-the-next-cdn-if-the-primary-fails-to-load",
+      "title": "Implement fallback CDN loading mechanism in frontend/index.html by adding multiple CDN sources for MindAR library (unpkg.com, jsdelivr.net, cdnjs) with automatic fallback logic that tries the next CDN if the primary fails to load",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-network-connectivity-check-in-app-tsx-before-initializing-ar-by-testing-fetch-to-a-reliable-endpoint-e-g-https-www-google-com-favicon-ico-with-a-short-timeout-and-display-no-internet-connection-detected-error-if-the-check-fails",
+      "title": "Add network connectivity check in App.tsx before initializing AR by testing fetch to a reliable endpoint (e.g., https://www.google.com/favicon.ico) with a short timeout, and display 'No internet connection detected' error if the check fails",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-error-handling-in-app-tsx-to-differentiate-between-network-failure-no-internet-connection-cdn-failure-library-unavailable-and-ar-initialization-failure-library-loaded-but-ar-setup-failed-displaying-appropriate-error-messages-and-recovery-suggestions-for-each-scenario",
+      "title": "Update error handling in App.tsx to differentiate between network failure (no internet connection), CDN failure (library unavailable), and AR initialization failure (library loaded but AR setup failed), displaying appropriate error messages and recovery suggestions for each scenario",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-download-the-mindar-library-and-bundle-it-locally-in-the-frontend-application-instead-of-relying-on-cdn-loading-placing-the-library-files-in-frontend-public-lib-mindar-and-updating-frontend-index-html-to-load-from-the-local-path-instead-of-cdn-urls",
+      "title": "Download the MindAR library and bundle it locally in the frontend application instead of relying on CDN loading, placing the library files in frontend/public/lib/mindar/ and updating frontend/index.html to load from the local path instead of CDN URLs",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-typescript-type-declarations-in-frontend-src-types-mindar-d-ts-to-remove-cdn-specific-loading-flags-window-mindarcdnloaded-window-mindarcdnfailed-since-the-library-will-now-be-bundled-locally",
+      "title": "Update the TypeScript type declarations in frontend/src/types/mindar.d.ts to remove CDN-specific loading flags (window.mindARCDNLoaded, window.mindARCDNFailed) since the library will now be bundled locally",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-network-connectivity-check-from-app-tsx-since-cdn-loading-is-no-longer-used-and-update-the-error-handling-to-remove-network-and-cdn-error-types-keeping-only-permission-camera-and-initialization-error-types",
+      "title": "Remove the network connectivity check from App.tsx since CDN loading is no longer used, and update the error handling to remove 'network' and 'cdn' error types, keeping only 'permission', 'camera', and 'initialization' error types",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-error-detection-logic-in-app-tsx-to-remove-the-window-mindar-undefined-check-since-the-library-will-always-be-available-from-local-bundling-simplifying-the-initialization-flow",
+      "title": "Update the error detection logic in App.tsx to remove the window.MINDAR undefined check since the library will always be available from local bundling, simplifying the initialization flow",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Dynamic loading system for all 5 animal 3D models with proper unloading and preloading",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Model selection UI with buttons or carousel for switching between animals",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Robust image target tracking with proper anchor attachment to T-shirt",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Realistic 'coming out of shirt' animation with scaling, easing, bounce, and idle motion",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Physically correct lighting system with soft shadows and sRGB encoding",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Performance optimization with DRACO compression, loading progress, and 60fps mobile target",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Responsive mobile-first UI that works after deployment",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Photo and video capture system with UI exclusion and high-resolution export",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Fix camera permission not working",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Replace existing models with 3 new 3D models provided by user",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Fix MindAR library CDN loading failure - investigate CDN availability, add fallback CDN sources, or bundle library locally",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "3d",
+  "projectName": "WebAR T-Shirt Animal Experience",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

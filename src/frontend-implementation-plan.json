@@ -1,0 +1,79 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Fix MindAR library CDN loading failure with local bundling",
+  "requirements": [
+    {
+      "id": "REQ-23",
+      "summary": "Download MindAR library and bundle it locally instead of relying on CDN loading",
+      "acceptanceCriteria": [
+        "MindAR library files are downloaded and placed in frontend/public/lib/mindar/ directory",
+        "frontend/index.html script tag loads MindAR from local path instead of CDN",
+        "The fallback CDN loading mechanism is removed since local bundling is now the primary method",
+        "window.MINDAR is successfully defined after local script loads",
+        "AR experience initializes without CDN-related errors"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/lib/mindar/mindar-image-three.prod.js",
+          "operation": "create",
+          "description": "Create the MindAR library directory structure and download the production-ready MindAR image tracking library with Three.js integration from the official MindAR repository (https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js). Place the library file at frontend/public/lib/mindar/mindar-image-three.prod.js to enable local bundling. This eliminates the CDN dependency and ensures the AR library is always available."
+        },
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Replace the entire inline CDN fallback script (including the automatic loading logic across jsdelivr, unpkg, and cdnjs with retry mechanisms) with a single script tag that loads MindAR from the local path: <script src=\"/lib/mindar/mindar-image-three.prod.js\"></script>. Remove all window.mindARCDNLoaded and window.mindARCDNFailed flag assignments. Keep the existing MindAR script tag positioned before the main application bundle to ensure window.MINDAR is available when the React app initializes."
+        }
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "summary": "Update TypeScript type declarations to remove CDN-specific loading flags",
+      "acceptanceCriteria": [
+        "CDN loading flags are removed from type declarations",
+        "Type declarations accurately reflect local bundling approach",
+        "No TypeScript errors occur after removing CDN-specific types"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/types/mindar.d.ts",
+          "operation": "modify",
+          "description": "Remove the window.mindARCDNLoaded and window.mindARCDNFailed properties from the Window interface declaration since CDN loading is no longer used. Keep the window.MINDAR property declaration and the MindARThree class interface intact, as these are still required for the local bundled library. Ensure the type declarations accurately reflect that MindAR is always available from local bundling."
+        }
+      ]
+    },
+    {
+      "id": "REQ-25",
+      "summary": "Remove network connectivity check and CDN-related error types from App.tsx",
+      "acceptanceCriteria": [
+        "Network connectivity check (fetch to google.com/favicon.ico) is removed from App.tsx",
+        "ErrorType no longer includes 'network' and 'cdn' types",
+        "Error handling UI no longer displays network or CDN error messages",
+        "Error messages focus on camera permission and AR initialization issues"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Remove the checkNetworkConnectivity function that performs a fetch request to google.com/favicon.ico. Update the ErrorType type definition to remove 'network' and 'cdn' types, keeping only 'permission', 'camera', and 'initialization' error types. Remove the corresponding network and CDN error message handling in the error display UI. Update the error state management to only handle camera permission and AR initialization errors. Simplify the error recovery UI to focus on camera-related issues without mentioning network or CDN connectivity."
+        }
+      ]
+    },
+    {
+      "id": "REQ-26",
+      "summary": "Remove window.MINDAR undefined check from initialization logic",
+      "acceptanceCriteria": [
+        "window.MINDAR undefined check is removed from initialization logic",
+        "AR initialization proceeds directly to arController.initialize() after component mount",
+        "No CDN validation checks remain in the codebase"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Remove the window.MINDAR undefined check and any CDN validation logic from the AR initialization flow in the useEffect hook. Since MindAR is now bundled locally and always available, the initialization should proceed directly to calling arController.initialize() after component mount without checking for CDN loading status. Remove any conditional logic that validates whether the MindAR library has loaded successfully from CDN. Simplify the initialization flow to assume MindAR is always present."
+        }
+      ]
+    }
+  ]
+}
